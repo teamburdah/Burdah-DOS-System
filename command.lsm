@@ -1,0 +1,13 @@
+Begin3
+Title:          Portal
+Version:        1.05
+Entered-date:   Mon DD 202Y
+Description:    Burdah Command Shell
+Keywords:       portal burdah command shell
+Author:         teamburdah@gmail.com (developers)
+Maintained-by:  teamburdah@gmail.com (maintainers)
+Primary-site:   https://github.com/teamburdah/Burdah-DOS-System/portal
+Alternate-site: https://www.instagram.com/teamburdah/
+Platforms:      dos dosemu
+Copying-policy: GNU General Public License, Version 2 (GPL)
+End
