@@ -1,0 +1,3 @@
+; Dummy file as the English language is the default
+; DEFAULT.err already contains the English critical-error strings.
+; Use this file only to override individual entries for English.

@@ -1,0 +1,7 @@
+-S0x10
+-S0x78
+-S0x79
+-E../utils/upxentry.bin
+-D../utils/upxdevic.bin
+-U
+upx --8086 --best

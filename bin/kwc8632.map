@@ -1,0 +1,1691 @@
+Open Watcom Linker Version 2.0 beta Aug 27 2026 10:21:26 (64-bit)** EXPERIMENTAL (HLL) ** 
+Copyright (c) 2002-2026 The Open Watcom Contributors. All Rights Reserved.
+Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
+Created on:       26/08/28 06:38:33
+Executable Image: kernel.exe
+creating a DOS executable
+
+
+                        +------------+
+                        |   Groups   |
+                        +------------+
+
+Group                           Address              Size
+=====                           =======              ====
+
+PGROUP                          0000:0000            00000100
+LGROUP                          0010:0000            00000693
+DGROUP                          007a:0000            0000190c
+TGROUP                          020b:0000            0000f3d0
+I_GROUP                         1148:0000            00002f00
+
+
+
+                        +--------------+
+                        |   Segments   |
+                        +--------------+
+
+Segment                Class          Group          Address         Size
+=======                =====          =====          =======         ====
+
+PSP                    PSP            PGROUP         0000:0000       00000100
+_IRQTEXT               LCODE          LGROUP         0010:0000       00000100
+_LOWTEXT               LCODE          LGROUP         0020:0000       0000011b
+_IO_TEXT               LCODE          LGROUP         0031:000b       0000033a
+_IO_FIXED_DATA         LCODE          LGROUP         0065:0006       0000013d
+_TEXT                  LCODE          LGROUP         0079:0003       00000000
+_FIXED_DATA            FDATA          DGROUP         007a:0000       00000afa
+_BSS                   BSS            DGROUP         0129:000a       000002aa
+_DATA                  DATA           DGROUP         0154:0004       00000448
+_DATAEND               DATA           DGROUP         0198:000c       000000c0
+CONST                  DATA           DGROUP         01a4:000c       00000333
+CONST2                 DATA           DGROUP         01d8:0000       0000032a
+DCONST                 DCONST         DGROUP         020a:000a       00000000
+DYN_DATA               DYN_DATA       DGROUP         020a:000a       00000002
+HMA_TEXT_START         CODE           TGROUP         020b:0000       00000000
+HMA_TEXT               CODE           TGROUP         020b:0000       0000ada1
+HMA_TEXT_END           CODE           TGROUP         0ce6:0000       00000000
+INIT_TEXT_START        CODE           TGROUP         0ce6:0000       00000000
+INIT_TEXT              CODE           TGROUP         0ce6:0000       0000461b
+INIT_TEXT_END          CODE           TGROUP         1148:0000       00000000
+ID_B                   FAR_DATA       I_GROUP        1148:0000       00000000
+I_DATA                 FAR_DATA       I_GROUP        1148:0000       000005fc
+ICONST                 FAR_DATA       I_GROUP        11a7:000c       00000c55
+ICONST2                FAR_DATA       I_GROUP        126d:0002       00000000
+ID_E                   FAR_DATA       I_GROUP        126d:0002       00000000
+IB_B                   FAR_DATA       I_GROUP        126d:0002       00000000
+I_BSS                  FAR_DATA       I_GROUP        126d:0002       0000189e
+IB_E                   FAR_DATA       I_GROUP        13f7:0000       00000410
+_STACK                 STACK          AUTO           1438:0000       00001000
+
+
+                        +----------------+
+                        |   Memory Map   |
+                        +----------------+
+
+* = unreferenced symbol
++ = symbol only referenced locally
+s = symbol is static
+
+Address        Symbol
+=======        ======
+
+Module: kernel.obj(kernel.obj)
+0000:0002*     _LowKernelConfig
+0000:0020*     realentry
+0000:0080      _master_env
+0010:0100      _intvec_table
+0010:0106      _BIOSInt13
+0010:0110*     _BIOSInt19
+0010:011a      _UserInt13
+0010:011e      _int1e_table
+0010:012c      _TEXT_DGROUP
+007a:0000*     DATASTART
+007a:0000      _DATASTART
+007a:000e      _NetBios
+007a:001a      _NetRetry
+007a:001c      _NetDelay
+007a:001e*     _DskBuffer
+007a:0022      _inputptr
+007a:0024      _first_mcb
+007a:0026*     MARK0026H
+007a:0026      _DPBp
+007a:002a      _sfthead
+007a:002e      _clock
+007a:0032      _syscon
+007a:0036      _maxsecsize
+007a:003c      _CDSp
+007a:0040*     _FCBp
+007a:0044*     _nprotfcb
+007a:0046*     _nblkdev
+007a:0047      _lastdrive
+007a:0048      _nul_dev
+007a:005a      _njoined
+007a:005d      _setverPtr
+007a:0065      _LoL_nbuffers
+007a:0069      _BootDrive
+007a:006a      _CPULevel
+007a:006d      _firstbuf
+007a:0079      _bufloc
+007a:007a      _deblock_buf
+007a:0086*     _VgaSet
+007a:0089      _uppermem_link
+007a:008c      _uppermem_root
+007a:0090      _os_setver_minor
+007a:0091      _os_setver_major
+007a:0092      _os_minor
+007a:0093      _os_major
+007a:0095      _version_flags
+007a:0096*     os_release
+007a:0098      _oem_id
+007a:00cc*     _firstsftt
+007a:01fb*     MARK01FBH
+007a:01fb      _local_buffer
+007a:027b      _kb_buf
+007a:02fe      _PrinterEcho
+007a:02ff      _verify_ena
+007a:0300      _scr_pos
+007a:0301      _switchar
+007a:0302      _mem_access_mode
+007a:0303*     sharing_flag
+007a:0304      _net_set_count
+007a:0305      _net_name
+007a:0315*     _CritPatch
+007a:0320      _internal_data
+007a:0320      _ErrorMode
+007a:0321      _InDOS
+007a:0322*     _CritErrDrive
+007a:0323      _CritErrLocus
+007a:0324      _CritErrCode
+007a:0326      _CritErrAction
+007a:0327      _CritErrClass
+007a:0328      _CritErrDev
+007a:032c      _dta
+007a:0330      _cu_psp
+007a:0334      _return_code
+007a:0336      _default_drive
+007a:0337      _break_ena
+007a:033a      _swap_always
+007a:033a      _Int21AX
+007a:033c*     owning_psp
+007a:033e      _MachineId
+007a:034d      _break_flg
+007a:0350*     _DayOfMonth
+007a:0351*     _Month
+007a:0352*     _YearsSince1980
+007a:0356*     _DayOfWeek
+007a:0358*     _dosidle_flag
+007a:0359      _abort_progress
+007a:035a      _CharReqHdr
+007a:035a      _ClkReqHdr
+007a:037c      _MediaReqHdr
+007a:0392      _IoReqHdr
+007a:03b6      _ClkRecord
+007a:03be      __PriPathBuffer
+007a:043e      __SecPathBuffer
+007a:04be      _sda_tmp_dm
+007a:04d3      _SearchDir
+007a:04f3      _TempCDS
+007a:054b      _DirEntBuffer
+007a:056b      _wAttr
+007a:056d      _SAttr
+007a:056e      _OpenMode
+007a:0572*     _Server_Call
+007a:057c      _term_type
+007a:057e*     term_psp
+007a:0580*     int24_esbp
+007a:0584      _user_r
+007a:0584      int21regs_off
+007a:0586      int21regs_seg
+007a:0588      critical_sp
+007a:058a*     current_ddsc
+007a:059a*     current_device
+007a:059e      _lpCurSft
+007a:05a2      _current_ldt
+007a:05a6      _sda_lpFcb
+007a:05aa      _current_sft_idx
+007a:05ce      _current_filepos
+007a:05f0*     _prev_user_r
+007a:05f0*     prev_int21regs_off
+007a:05f2*     prev_int21regs_seg
+007a:05fd      _ext_open_action
+007a:05ff      _ext_open_attrib
+007a:0601      _ext_open_mode
+007a:0620*     apistk_bottom
+007a:0620      _sda_tmp_dm_ren
+007a:0635*     _SearchDir_ren
+007a:07a0      _error_tos
+007a:0920      _disk_api_tos
+007a:0aa0      _char_api_tos
+007a:0fa4      blk_stk_top
+007a:10a4      clk_stk_top
+007a:11a4      int2f_stk_top
+007a:11ec      _swap_indos
+007a:12ac      _p_0_tos
+007a:12ac*     _nul_strtgy
+007a:12b1*     _nul_intr
+007a:12d3      _int22_handler
+007a:12d3      _int28_handler
+007a:12d3      _int2a_handler
+007a:12d3      _empty_handler
+007a:12d8      __HMARelocationTableStart
+007a:12d8      _int2f_handler
+007a:12e0      _int20_handler
+007a:12e8      _int21_handler
+007a:12f0      _low_int25_handler
+007a:12f8      _low_int26_handler
+007a:1300      _int27_handler
+007a:1308      _int0_handler
+007a:1310      _int6_handler
+007a:1318      _int19_handler
+007a:1320      _cpm_entry
+007a:1328      _reloc_call_blk_driver
+007a:1330      _reloc_call_clk_driver
+007a:1338      _CharMapSrvc
+007a:1340      _init_call_p_0
+007a:1348      __HMARelocationTableEnd
+007a:1348      _ENABLEA20
+007a:134a      _XMS_Enable_Patch
+007a:134d      _XMSDriverAddress
+007a:1353      _DISABLEA20
+007a:1357*     forceEnableA20
+007a:137f      _ExecUserDisableA20
+007a:1386      _int24_handler
+007a:190a      _Dyn
+007a:190c*     _markEndInstanceData
+020b:0000*     __HMATextAvailable
+020b:0000      __HMATextStart
+020b:0031      _DGROUP_
+020b:0033      __U4M
+020b:0049      __U4D
+020b:adb0      __HMATextEnd
+020b:adb0      __InitTextStart
+020b:ae97*     _INIT_DGROUP
+020b:f3d0      __InitTextEnd
+1148:0000*     __INIT_DATA_START
+1148:1252*     __INIT_DATA_END
+1148:1252      __ib_start
+1148:2af0      __ib_end
+1148:2ef0*     init_tos
+1148:2f00      __init_end
+Module: entry.obj(entry.obj)
+020b:00d5      reloc_call_cpm_entry
+020b:0134      reloc_call_int0_handler
+020b:0182      reloc_call_int6_handler
+020b:0187      reloc_call_int19_handler
+020b:01a4      reloc_call_int20_handler
+020b:01a6      reloc_call_int21_handler
+020b:0255      _int21_iret
+020b:026e      reloc_call_int27_handler
+020b:027f      reloc_call_low_int26_handler
+020b:0287      reloc_call_low_int25_handler
+020b:02c7      _CriticalError
+Module: io.obj(io.obj)
+0010:021b      _ReqPktPtr
+0010:0221      GenStrategy
+0010:02d8      _IOSuccess
+0010:02e2      _IOExit
+0010:02f6      _IODone
+0010:02fa      _IOCommandError
+0010:02fc      _IOErrCnt
+0010:0304      _IOErrorExit
+0010:0308      GetUnitNum
+0010:0556      _con_dev
+0010:0568*     _prn_dev
+0010:057a*     _aux_dev
+0010:060a*     _clk_dev
+0010:061c      _blk_dev
+Module: console.obj(console.obj)
+0010:012f      _kbdType
+0010:0130      _splash_active
+0010:0131*     ConInit
+0010:0141*     ConRead
+0010:015e*     KbdRdChar
+0010:0181      CommonNdRdExit
+0010:01bf*     ConInpFlush
+0010:01de*     ConWrite
+0010:01eb*     _CBreak
+0010:01f2      _int29_handler
+0010:0630      ConTable
+Module: serial.obj(serial.obj)
+0010:0648      ComTable
+Module: printer.obj(printer.obj)
+0010:041e      uPrtNo
+0010:0660      LptTable
+Module: dsk.obj(dsk.obj)
+007a:11a8      _LBA_WRITE_VERIFY
+020b:03bb      getddt_
+020b:03c6s     tmark_
+020b:03d7s     tdelay_
+020b:040b      _blk_driver
+020b:045es     play_dj_
+020b:051as     diskchange_
+020b:0562s     mediachk_
+020b:05b8s     RWzero_
+020b:05e2s     Getlogdev_
+020b:063cs     Setlogdev_
+020b:066ds     blk_Open_
+020b:0674s     blk_Close_
+020b:0679s     blk_nondr_
+020b:067ds     blk_Media_
+020b:0687s     blk_noerr_
+020b:068bs     getbpb_
+020b:07abs     bldbpb_
+020b:07cbs     IoctlQueblk_
+020b:0807s     Genblockio_
+020b:086ds     GenblockioAbs_
+020b:08b9s     Genblkdev_
+020b:0d05s     blockio_
+020b:0df3s     blk_error_
+020b:0e03s     dskerr_
+020b:0e56s     LBA_to_CHS_
+020b:0ee0s     DMA_max_transfer_
+020b:0efes     LBA_Transfer_
+020b:115a*     writelabelBPB_
+007a:15e0s     _dispatch
+007a:11aas     _template_string
+007a:0afa      _DiskTransferBuffer
+Module: sysclk.obj(sysclk.obj)
+020b:11acs     ByteToBcd_
+020b:11ccs     DayToBcd_
+020b:11fd      _clk_driver
+007a:11d8      _DaysSinceEpoch
+Module: asmsupt.obj(asmsupt.obj)
+020b:140e      MEMCPY
+020b:141a      FMEMCPY
+020b:1427      FMEMSET
+020b:143d      MEMSET
+020b:145c      FSTRCPY
+020b:1469      STRCPY
+020b:147c      FSTRLEN
+020b:1486      STRLEN
+020b:149c      STRCHR
+020b:14b7      FSTRCHR
+020b:14bf      FMEMCHR
+020b:14d6      FSTRCMP
+020b:14f0      FMEMCMP
+020b:14fd      MEMCMP
+Module: execrh.obj(execrh.obj)
+020b:1512      EXECRH
+Module: nlssupt.obj(nlssupt.obj)
+020b:153b      _reloc_call_CharMapSrvc
+Module: procsupt.obj(procsupt.obj)
+0010:020c      _got_cbreak
+020b:1552      _exec_user
+020b:1571      _spawn_int23
+020b:15b3      reloc_call_p_0
+Module: dosidle.obj(dosidle.obj)
+020b:15cb*     _DosIdle_hlt
+020b:15de      _DosIdle_int
+Module: int2f.obj(int2f.obj)
+020b:162e      reloc_call_int2f_handler
+020b:1739      SHARE_CHECK
+020b:1742      SHARE_OPEN_CHECK
+020b:1757      SHARE_CLOSE_FILE
+020b:1760      SHARE_ACCESS_CHECK
+020b:1782      SHARE_LOCK_UNLOCK
+020b:1787      SHARE_IS_FILE_OPEN
+020b:17b9      NETWORK_REDIRECTOR_MX
+020b:1855      CALL_NLS
+020b:1875      FLOPPY_CHANGE
+020b:ae99      UMB_GET_LARGEST
+Module: nls_hc.obj(nls_hc.obj)
+007a:1614      _nlsPackageHardcoded
+007a:163d      _nlsCountryInfoHardcoded
+007a:163e*     _nlsCntryInfoHardcoded
+007a:165c*     _hcTablesStart
+007a:165c*     _nlsUpcaseHardcoded
+007a:16de*     _nlsFUpcaseHardcoded
+007a:1760*     _nlsFnameTermHardcoded
+007a:1778*     _nlsCollHardcoded
+007a:187a*     _nlsDBCSHardcoded
+007a:1884*     _hcTablesEnd
+Module: intr.obj(intr.obj)
+020b:1882      CALL_INTR
+020b:18ec      RES_DOSEXEC
+020b:18fc      RES_READ
+020b:aecd      INIT_CALL_INTR
+020b:af3b      INIT_CALL_XMSCALL
+020b:af45      DETECTXMSDRIVER
+020b:af61      KEYCHECK
+020b:af66      INIT_DOSOPEN
+020b:af74      CLOSE
+020b:af7b      READ
+020b:af84      DUP2
+020b:af8c      LSEEK
+020b:af9d      INIT_PSPSET
+020b:afa5      INIT_DOSEXEC
+020b:afb5      INIT_SETDRIVE
+020b:afbd      INIT_SWITCHAR
+020b:afc2      ALLOCMEM
+020b:afce      SET_DTA
+Module: irqstack.obj(irqstack.obj)
+020b:afea      _init_stacks
+Module: blockio.obj(blockio.obj)
+020b:190bs     move_buffer_
+020b:193fs     searchblock_
+020b:1a0f      DeleteBlockInBufferCache_
+020b:1a7e      getblk_
+020b:1af2      setinvld_
+020b:1b1c      dirty_buffers_
+020b:1b4f      flush_buffers_
+020b:1b86s     flush1_
+020b:1c41      flush_
+020b:1c76      dskxfer_
+020b:1e02      AllocateHMASpace_
+Module: chario.obj(chario.obj)
+020b:1e75s     CharRequest_
+020b:1eda      BinaryCharIO_
+020b:1f0es     CharIO_
+020b:1f37s     CharCmd_
+020b:1f4cs     Busy_
+020b:1f70      con_flush_
+020b:1f79      sft_to_dev_
+020b:1fa7      StdinBusy_
+020b:1ff5      ndread_
+020b:200f      update_scr_pos_
+020b:203a      cooked_write_
+020b:2111      write_char_
+020b:2133      write_char_stdout_
+020b:2192s     echo_char_
+020b:21bes     destr_bs_
+020b:21dd      cooked_read_
+020b:2215s     read_char_sft_dev_
+020b:22e6s     raw_get_char_
+020b:22f7      read_char_
+020b:2322s     read_char_check_break_
+020b:232b      read_char_stdin_
+020b:2380      read_line_
+020b:260f      read_line_handle_
+Module: systime.obj(systime.obj)
+020b:26a3      is_leap_year_monthdays_
+020b:26b4+     DaysFromYearMonthDay_
+020b:26ee+     ExecuteClockDriverRequest_
+020b:2705      DosGetTime_
+020b:272e      DosSetTime_
+020b:278f      DosGetDate_
+020b:27f5      DosSetDate_
+007a:1884+     _days
+Module: error.obj(error.obj)
+020b:287a      panic_
+020b:2890      char_error_
+020b:28b9      block_error_
+Module: break.obj(break.obj)
+020b:28ed      ctrl_break_pressed_
+020b:28fe      check_handle_break_
+020b:294a      handle_break_
+Module: dosfns.obj(dosfns.obj)
+020b:2996      get_cds_unvalidated_
+020b:29f3      get_cds1_
+020b:29fd      get_cds_
+020b:2a0f      GetDriveDPB_
+020b:2a51      idx_to_sft__
+020b:2aaf      get_sft_idx_
+020b:2ad7      get_sft_
+020b:2ada      idx_to_sft_
+020b:2af6      DosRWSft_
+020b:2cea+     SftSeek2_
+020b:2da2      SftSeek_
+020b:2db4      DosSeek_
+020b:2ddds     get_free_hndl_
+020b:2e0fs     get_free_sft_
+020b:2e78      get_root_
+020b:2ea4s     ConvertPathNameToFCBName_
+020b:2ebbs     set_fcbname_
+020b:2ec7s     DeviceOpenSft_
+020b:2f7e      DosOpenSft_
+020b:316b      DosOpen_
+020b:31b2      CloneHandle_
+020b:31db      DosDup_
+020b:3203      DosForceDup_
+020b:3273      DosCloseSft_
+020b:3344      DosClose_
+020b:3378      DosGetFree_
+020b:3521      DosGetExtFree_
+020b:379d      DosGetCuDir_
+020b:37e8      DosChangeDir_
+020b:385as     pop_dmp_
+020b:38b2      DosFindFirst_
+020b:397a      DosFindNext_
+020b:39ec      DosGetFtime_
+020b:3a16      DosSetFtimeSft_
+020b:3a48      DosGetFattr_
+020b:3a8b      DosSetFattr_
+020b:3af1      DosSelectDrv_
+020b:3b13      DosDelete_
+020b:3b67      DosRenameTrue_
+020b:3bc8      DosRename_
+020b:3c1a      DosMkRmdir_
+020b:3c68      DosLockUnlock_
+020b:3cc9      IsDevice_
+020b:3d95      IsShareInstalled_
+020b:3db8      DosTruename_
+020b:3ddfs     remote_lock_unlock_
+007a:11da+     _share_installed
+Module: fatdir.obj(fatdir.obj)
+020b:3e12      dir_init_fnode_
+020b:3e70      dir_open_
+020b:3f29s     swap_deleted_
+020b:3f3b      dir_read_
+020b:4061      dir_write_update_
+020b:4157      dos_findfirst_
+020b:41a6      dos_findnext_
+020b:423c      ConvertName83ToNameSZ_
+020b:42bb      ConvertNameSZToName83_
+Module: fatfs.obj(fatfs.obj)
+020b:42f9s     time_encode_
+020b:431f      getdstart_
+020b:433d+     setdstart_
+020b:435f      clus2phys_
+020b:4397      get_dpb_
+020b:43c1s     init_direntry_
+020b:43fc      dos_open_
+020b:4517      fcmp_wild_
+020b:453c      dos_close_
+020b:457f      split_path_
+020b:45a3      dir_exists_
+020b:45b3      fcbmatch_
+020b:45c7s     find_fname_
+020b:4618+     remove_lfn_entries_
+020b:466as     merge_file_changes_
+020b:47b0      dos_merge_file_changes_
+020b:47bbs     delete_dir_entry_
+020b:47e5      dos_delete_
+020b:4804      dos_rmdir_
+020b:48ba      dos_rename_
+020b:499fs     wipe_out_clusters_
+020b:4a4fs     wipe_out_
+020b:4a7cs     find_free_
+020b:4aa7s     alloc_find_free_
+020b:4ada      dos_getdate_
+020b:4b10      dos_gettime_
+020b:4b25s     find_fat_free_
+020b:4c0fs     clear_dir_
+020b:4c91      dos_mkdir_
+020b:4de7s     extend_
+020b:4e8ds     extend_dir_
+020b:4ed6      map_cluster_
+020b:4fdcs     dos_extend_
+020b:50b9      rwblock_
+020b:5452      dos_free_
+020b:553d      dos_cd_
+020b:5574      dos_getfattr_
+020b:558b      dos_setfattr_
+020b:55e0      dpb16to32_
+020b:5623      bpb_to_dpb_
+020b:5836s     rqblockio_
+020b:58cb      media_check_
+020b:5958s     sft_to_fnode_
+020b:5a0bs     fnode_to_sft_
+020b:5abbs     shrink_file_
+Module: fattab.obj(fattab.obj)
+020b:5bb8+     clusterMessage_
+020b:5be8+     getFATblock_
+020b:5c7e      read_fsinfo_
+020b:5d18      write_fsinfo_
+020b:5dc6      link_fat_
+020b:60dc      next_cluster_
+020b:6183      is_free_cluster_
+Module: fcbfns.obj(fcbfns.obj)
+020b:619a      FatGetDrvData_
+020b:61f1      FcbParseFname_
+020b:635e+     ParseSkipWh_
+020b:6379+     GetNameField_
+020b:6406s     FcbNextRecord_
+020b:6423s     FcbRec_
+020b:644d      FcbReadWrite_
+020b:656f      FcbGetFileSize_
+020b:6601      FcbSetRandom_
+020b:6618s     FcbCalcRec_
+020b:6644      FcbRandomBlockIO_
+020b:6695      FcbRandomIO_
+020b:66dc      FcbOpen_
+020b:67acs     ExtFcbToFcb_
+020b:67d6s     CommonFcbInit_
+020b:67f0s     FcbNameInit_
+020b:6835      FcbDelete_
+020b:68f2      FcbRename_
+020b:6a60      FcbClose_
+020b:6af1      FcbCloseAll_
+020b:6b2a      FcbFindFirstNext_
+007a:0cfes     _Dmatch
+Module: inthndlr.obj(inthndlr.obj)
+020b:6c5d      _int21_syscall
+020b:6d38+     int21_fat32_
+020b:71f9      _int21_service
+020b:7ea9      _int2526_handler
+020b:802c      _int2F_12_handler
+007a:18b8      _os_release
+007a:0d2a      _fnode
+007a:0d9e      _firstAvailableBuf
+007a:0da2      _HaltCpuWhileIdle
+007a:0da3      _ReturnAnyDosVersionExpected
+Module: ioctl.obj(ioctl.obj)
+020b:877b      DosDevIOctl_
+007a:18ecs     _cmd
+Module: memmgr.obj(memmgr.obj)
+020b:8a56s     joinMCBs_
+020b:8ab9      adjust_far_
+020b:8aee      DosMemAlloc_
+020b:8d31      DosMemLargest_
+020b:8d8e      DosMemFree_
+020b:8dd0      DosMemChange_
+020b:8e69      DosMemCheck_
+020b:8ed5      FreeProcessMem_
+020b:8f30      DosUmbLink_
+Module: task.obj(task.obj)
+020b:8fb1      getvec_
+020b:8fcb      setvec_
+020b:8fe7      SftGetFsize_
+020b:9008s     SetverCompareFilename_
+020b:9073s     SetverGetVersion_
+020b:90ebs     ChildEnv_
+020b:91b1      new_psp_
+020b:91ff      child_psp_
+020b:92c9s     patchPSP_
+020b:9432s     load_transfer_
+020b:94f2s     ExecMemLargest_
+020b:952es     ExecMemAlloc_
+020b:95a0+     DosComLoader_
+020b:9767      return_user_
+020b:984b+     DosExeLoader_
+020b:9ad6      DosExec_
+020b:9bb3      _P_0
+Module: newstuff.obj(newstuff.obj)
+020b:9ca9      SetJFTSize_
+020b:9d25      DosMkTmp_
+020b:9e13      truename_
+007a:18fes     __DirChars
+Module: nls.obj(nls.obj)
+020b:a57ds     muxGo_
+020b:a596s     muxLoadPkg_
+020b:a5e9s     muxBufGo_
+020b:a5fcs     searchPackage_
+020b:a646s     locateSubfct_
+020b:a67es     cpyBuf_
+020b:a69fs     upMMem_
+020b:a6eas     nlsGetData_
+020b:a742*     nlsCPchange_
+020b:a748s     nlsSetPackage_
+020b:a77as     nlsLoadPackage_
+020b:a784s     DosLoadPackage_
+020b:a7a6s     nlsUpMem_
+020b:a7c6s     nlsFUpMem_
+020b:a7dcs     xUpMem_
+020b:a80b      nlsIsDBCS_
+020b:a84as     nlsYesNo_
+020b:a89b      DosYesNo_
+020b:a8cd      DosUpMem_
+020b:a8e7      _DosUpChar
+020b:a8fa      DosUpString_
+020b:a90d      DosUpFMem_
+020b:a93d      DosUpFChar_
+020b:a95a      DosUpFString_
+020b:a96d      DosGetData_
+020b:a9fb      DosGetCountryInformation_
+020b:aa0e      DosSetCountry_
+020b:aa19      DosGetCodepage_
+020b:aa35      DosSetCodepage_
+020b:aa43s     DosSetPackage_
+020b:aa54      DosGetDBCS_
+020b:aa65      _syscall_MUX14
+007a:11dc      _nlsInfo
+Module: network.obj(network.obj)
+020b:ab4f      get_machine_name_
+020b:ab61      set_machine_name_
+020b:ab78      network_redirector_fp_
+020b:ab86      network_redirector_
+Module: prf.obj(prf.obj)
+020b:ab92      put_console_
+020b:aba8      hexd_
+020b:ac59      put_unsigned_
+020b:ac9f      put_string_
+Module: memdisk.obj(memdisk.obj)
+020b:b058*     _query_memdisk
+Module: main.obj(main.obj)
+1148:0000s     _copyright
+020b:b0ba      _FreeDOSmain
+020b:b123+     InitializeAllBPBs_
+020b:b158s     PSPInit_
+020b:b22bs     setup_int_vectors_
+020b:b2d1s     init_kernel_
+020b:b3aas     FsConfig_
+020b:b4bfs     signon_
+020b:b504s     kernel_
+020b:b5e9s     update_dcb_
+020b:b73f      init_device_
+020b:b8a6s     InitIO_
+020b:b8ce*     init_fatal_
+020b:b8dbs     InitPrinters_
+020b:b91bs     InitSerialPorts_
+020b:b955s     EmulatedDriveStatus_
+020b:b98bs     CheckContinueBootFromHarddisk_
+1148:0124      _LoL
+1148:0128      _InitKernelConfig
+1148:013f      _kernel_command_line
+1148:023f      _debugger_present
+1148:1252      _kernel_command_line_length
+Module: config.obj(config.obj)
+1148:1254s     _szLine
+1148:1354s     _szBuf
+1148:1454s     _ErrorAlreadyPrinted
+1148:14d4+     _InstallCommands
+1148:19e8+     _cfgFile
+1148:19fc      _lpTop
+1148:1a00s     _MenuStruct
+1148:1d52+     _numInstallCmds
+1148:1d54+     _pLineStart
+1148:1d56+     _Menus
+1148:1d58+     _nCurChain
+1148:1d5a+     _MenuLine
+1148:1d5c+     _nFileDesc
+1148:1d5es     _nCfgLine
+1148:1d60s     _base_seg
+1148:1d62s     _umb_base_seg
+1148:027c+     _MenuColor
+1148:027es     _envp
+1148:0282      _Config
+1148:0295+     _MenuTimeout
+1148:0297s     _commands
+020b:ba24s     WriteMenuLine_
+020b:baa9s     DeselectLastLine_
+020b:bac9s     SelectLine_
+020b:bae8+     findend_
+020b:bb11      PreConfig_
+020b:bb54      PreConfig2_
+020b:bbfb      PostConfig_
+020b:bcf6      configDone_
+020b:bd39s     prev_mcb_
+020b:bd5fs     umb_init_
+020b:beads     check_config_commandline_
+020b:bf0e      DoConfig_
+020b:c101s     LookUp_
+020b:c125      GetBiosKey_
+020b:c18fs     SkipLine_
+020b:c2c4s     GetNumArg_
+020b:c34d+     GetStringArg_
+020b:c355s     Config_Buffers_
+020b:c36fs     CfgBuffersHigh_
+020b:c384s     sysScreenMode_
+020b:c3d1s     sysVersion_
+020b:c44bs     CfgOemId_
+020b:c486s     Files_
+020b:c4afs     FilesHigh_
+020b:c4b8s     CfgLastdrive_
+020b:c4f6s     CfgLastdriveHigh_
+020b:c4ffs     Dosmem_
+020b:c5efs     DosData_
+020b:c616s     CfgSwitchar_
+020b:c629s     CfgSwitches_
+020b:c6f6s     Fcbs_
+020b:c73bs     CfgKeyBuf_
+020b:c7eds     LoadCountryInfo_
+020b:cb3fs     Country_
+020b:cbb7s     Stacks_
+020b:cc1as     StacksHigh_
+020b:cc23s     InitPgmHigh_
+020b:cc2cs     InitPgm_
+020b:cc57s     CfgBreak_
+020b:cc7fs     Numlock_
+020b:ccabs     DeviceHigh_
+020b:ccf2s     Device_
+020b:cd05s     LoadDevice_
+020b:cde7s     CfgFailure_
+020b:ce60      KernelAllocPara_
+020b:cf2c      KernelAlloc_
+020b:cf7cs     AlignParagraph_
+020b:cf98s     iswh_
+020b:cfafs     skipwh_
+020b:cfc4s     scan_
+020b:d073s     isnum_
+020b:d082s     toupper_
+020b:d08ds     strupr_
+020b:d0a2s     mcb_init_
+020b:d0a9s     mcb_init_copy_
+020b:d0bas     mumcb_init_
+020b:d0c3+     strcat_
+020b:d0d4s     strcaseequal_
+020b:d0fcs     config_init_buffers_
+020b:d250s     SetAnyDos_
+020b:d25es     SetIdleHalt_
+020b:d27fs     CfgIgnore_
+020b:d280s     CfgMenu_
+020b:d308s     CfgMenuEsc_
+020b:d328s     DoMenu_
+020b:d556s     CfgMenuDefault_
+020b:d59bs     ClearScreen_
+020b:d5ffs     CfgMenuColor_
+020b:d65bs     LoadCountryInfoHardCoded_
+020b:d70bs     _CmdInstall_
+020b:d752s     CmdInstall_
+020b:d75as     CmdInstallHigh_
+020b:d760s     CmdChain_
+020b:d7ads     InstallExec_
+020b:d833s     free_
+020b:d84fs     set_strategy_
+020b:d85f      DoInstall_
+020b:d8c7s     searchvar_
+020b:d8fes     deletevar_
+020b:d92bs     CmdSet_
+1148:03eb+     _specificCountriesSupported
+1148:1d64+     _UMB_top
+1148:1d66+     _ebda_size
+1148:1d68+     _UmbState
+1148:1d6a+     _umb_start
+1148:1d6c+     _nMenuLine
+1148:1d6e      _ram_top
+1148:1d70+     _HMAState
+1148:1d71+     _askThisSingleCommand
+1148:1d72+     _MenuSelected
+1148:1d73+     _DontAskThisSingleCommand
+1148:1d74      _singleStep
+1148:1d75      _SkipAllConfig
+Module: initoem.obj(initoem.obj)
+020b:da13      init_oem_
+020b:da2b      movebda_
+020b:da55      ebdasize_
+Module: inithma.obj(inithma.obj)
+020b:daa9s     EnabledA20_
+020b:dabd*     EnableHMA_
+020b:daf0      MoveKernelToHMA_
+020b:db79s     InstallVDISK_
+020b:dba6      HMAalloc_
+020b:dbe4      MoveKernel_
+1148:0560+     _CurrentKernelSegment
+1148:2062      _HMAFree
+1148:2064+     _HMAclaimed
+1148:2065+     _DosLoadedInHMA
+Module: dyninit.obj(dyninit.obj)
+020b:dd16      DynAlloc_
+020b:dd5e*     DynFree_
+020b:dd72      DynLast_
+Module: iprf.obj(iprf.obj)
+020b:dd85+     init_put_console_
+020b:dd9bs     init_handle_char_
+020b:ddbas     init_ltob_
+020b:de3c      init_printf_
+020b:de53      init_sprintf_
+020b:de97s     init_do_printf_
+1148:0562s     _init_charp
+Module: initsplsh.obj(initsplsh.obj)
+020b:e021s     set_video_mode_
+020b:e03d      splash_init_
+020b:e265      splash_check_abort_
+020b:e2a7      splash_close_
+1148:2066s     _row_buf
+1148:21a6s     _pal_buf
+1148:25a6s     _dac_pal
+Module: initdisk.obj(initdisk.obj)
+020b:e2c3+     init_readdasd_
+020b:e2f3+     init_getdriveparm_
+020b:e37d+     init_LBA_to_CHS_
+020b:e3ef+     printCHS_
+020b:e40e+     CalculateFATData_
+020b:e659s     push_ddt_
+020b:e6a0+     DosDefinePartition_
+020b:e837s     LBA_Get_Drive_Parameters_
+020b:ea5fs     ConvCHSToIntern_
+020b:ea89+     ConvPartTableEntryToIntern_
+020b:eafa+     is_suspect_
+020b:eb36+     print_warning_suspect_
+020b:eb76+     ScanForPrimaryPartitions_
+020b:ed79+     Read1LBASector_
+020b:eeb0+     ProcessDisk_
+020b:f00f+     BIOS_nrdrives_
+020b:f045+     BIOS_drive_reset_
+020b:f061s     make_ddt_
+020b:f0c7+     ReadAllPartitionTables_
+020b:f2a1      dsk_init_
+1148:0564+     _ExtLBAForce
+1148:0566+     _floppy_bpbs
+1148:28a6+     _InitDiskTransferBuffer
+1148:2aa6+     _nUnits
+Module: initclk.obj(initclk.obj)
+020b:f2bes     InitBcdToByte_
+020b:f2d8      Init_clk_driver_
+Module: cpu.obj(cpu.obj)
+020b:f37f      _query_cpu
+Module: ../lib/device.lib(rdpcclk.asm)
+020b:acb2      READPCCLOCK
+Module: ../lib/device.lib(floppy.asm)
+020b:acc2      FL_RESET
+020b:accd      FL_DISKCHANGED
+020b:ace5      FL_FORMAT
+020b:ace9      FL_READ
+020b:aced      FL_VERIFY
+020b:acf1      FL_WRITE
+020b:ad21      FL_LBA_READWRITE
+020b:ad3b      FL_READKEY
+020b:ad40      FL_SETDISKTYPE
+020b:ad4d      FL_SETMEDIATYPE
+Module: ../lib/device.lib(wrpcclk.asm)
+020b:ad76      WRITEPCCLOCK
+Module: ../lib/device.lib(wratclk.asm)
+020b:ad7f      WRITEATCLOCK
+
+
+                        +---------------------+
+                        |   Module Segments   |
+                        +---------------------+
+
+! = 32-bit segment
+c = initialized communal data
+
+Module          Segment               Class           Address         Size
+======          =======               =====           =======         ====
+
+kernel.obj      PSP                   PSP            0000:0000        00000100
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:0000        0000002e
+                _IO_TEXT              LCODE          0031:000b        00000000
+                _IO_FIXED_DATA        LCODE          0065:0006        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0000        00000afa
+                _BSS                  BSS            0129:000a        00000000
+                _DATA                 DATA           0154:0004        00000400
+                _DATAEND              DATA           0198:000c        000000c0
+                CONST                 DATA           01a4:000c        000000dd
+                CONST2                DATA           01d8:0000        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000a        00000002
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:0000        000000d5
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:0000        000000e9
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0000        00000410
+                _STACK                STACK          1438:0000        00000000
+entry.obj       PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:002e        00000000
+                _IO_TEXT              LCODE          0031:000b        00000000
+                _IO_FIXED_DATA        LCODE          0065:0006        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:000a        00000000
+                _DATA                 DATA           0154:0404        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:00ea        00000000
+                CONST2                DATA           01d8:0000        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:00d5        000002e6
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+io.obj          PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:002e        00000000
+                _IO_TEXT              LCODE          0031:000b        00000156
+                _IO_FIXED_DATA        LCODE          0065:0006        000000d9
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:000a        00000000
+                _DATA                 DATA           0154:0404        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:00ea        00000000
+                CONST2                DATA           01d8:0000        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:03bb        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+console.obj     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:002e        000000de
+                _IO_TEXT              LCODE          0031:0161        00000000
+                _IO_FIXED_DATA        LCODE          0065:00e0        00000017
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:000a        00000000
+                _DATA                 DATA           0154:0404        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:00ea        00000000
+                CONST2                DATA           01d8:0000        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:03bb        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+serial.obj      PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:010c        00000000
+                _IO_TEXT              LCODE          0031:0161        000000ad
+                _IO_FIXED_DATA        LCODE          0065:00f8        00000017
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:000a        00000000
+                _DATA                 DATA           0154:0404        00000004
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:00ea        00000000
+                CONST2                DATA           01d8:0000        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:03bb        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+printer.obj     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:010c        00000000
+                _IO_TEXT              LCODE          0031:020e        000000e4
+                _IO_FIXED_DATA        LCODE          0065:0110        00000033
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:000a        00000000
+                _DATA                 DATA           0154:0408        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:00ea        00000000
+                CONST2                DATA           01d8:0000        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:03bb        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+dsk.obj         HMA_TEXT              CODE           020b:03bb        00000df1
+                CONST                 DATA           01a4:00ea        0000007e
+                CONST2                DATA           01d8:0000        00000034
+                _DATA                 DATA           0154:0408        0000002f
+                _BSS                  BSS            0129:000a        00000200
+sysclk.obj      HMA_TEXT              CODE           020b:11ac        00000248
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000000
+                _DATA                 DATA           0154:0438        00000002
+asmsupt.obj     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:010c        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:13f4        0000011e
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+execrh.obj      PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:010c        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:1512        00000029
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+nlssupt.obj     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:010c        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:153b        00000017
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+procsupt.obj    PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:010c        0000000f
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:1552        00000079
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+dosidle.obj     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:15cb        00000063
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+int2f.obj       PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:162e        00000254
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:00e9        00000034
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+nls_hc.obj      PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:0034        00000270
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:1882        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:011d        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+apisupt.obj     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:02a4        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:1882        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:011d        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+intr.obj        PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:02a4        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:1882        00000089
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:011d        0000010e
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+irqstack.obj    PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0000        00000100
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:02f2        00000053
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:020a        00000000
+                _DATA                 DATA           0154:043a        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:02a4        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:190b        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:022b        0000007d
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+blockio.obj     HMA_TEXT              CODE           020b:190b        0000056a
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:02a4        00000000
+                _DATA                 DATA           0154:043a        00000000
+chario.obj      HMA_TEXT              CODE           020b:1e75        0000082e
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:02a4        00000000
+                _DATA                 DATA           0154:043a        00000000
+systime.obj     HMA_TEXT              CODE           020b:26a3        000001d7
+                CONST                 DATA           01a4:0168        00000000
+                CONST2                DATA           01d8:02a4        00000034
+                _DATA                 DATA           0154:043a        00000000
+error.obj       HMA_TEXT              CODE           020b:287a        00000073
+                CONST                 DATA           01a4:0168        00000018
+                CONST2                DATA           01d8:02d8        00000000
+                _DATA                 DATA           0154:043a        00000000
+break.obj       HMA_TEXT              CODE           020b:28ed        000000a9
+                CONST                 DATA           01a4:0180        00000005
+                CONST2                DATA           01d8:02d8        00000000
+                _DATA                 DATA           0154:043a        00000000
+dosfns.obj      HMA_TEXT              CODE           020b:2996        0000147c
+                CONST                 DATA           01a4:0186        00000000
+                CONST2                DATA           01d8:02d8        00000000
+                _DATA                 DATA           0154:043a        00000001
+fatdir.obj      HMA_TEXT              CODE           020b:3e12        000004e7
+                CONST                 DATA           01a4:0186        00000000
+                CONST2                DATA           01d8:02d8        00000000
+                _DATA                 DATA           0154:043c        00000000
+fatfs.obj       HMA_TEXT              CODE           020b:42f9        000018bf
+                CONST                 DATA           01a4:0186        00000021
+                CONST2                DATA           01d8:02d8        00000000
+                _DATA                 DATA           0154:043c        00000000
+                _BSS                  BSS            0129:020a        00000004
+fattab.obj      HMA_TEXT              CODE           020b:5bb8        000005e2
+                CONST                 DATA           01a4:01a8        00000045
+                CONST2                DATA           01d8:02d8        00000000
+                _DATA                 DATA           0154:043c        00000000
+fcbfns.obj      HMA_TEXT              CODE           020b:619a        00000ac3
+                CONST                 DATA           01a4:01ee        00000018
+                CONST2                DATA           01d8:02d8        00000000
+                _DATA                 DATA           0154:043c        00000000
+                _BSS                  BSS            0129:020e        0000002c
+inthndlr.obj    HMA_TEXT              CODE           020b:6c5d        00001b1e
+                CONST                 DATA           01a4:0206        00000084
+                CONST2                DATA           01d8:02d8        00000034
+                _DATA                 DATA           0154:043c        00000000
+                _BSS                  BSS            0129:023a        0000007a
+ioctl.obj       HMA_TEXT              CODE           020b:877b        000002db
+                CONST                 DATA           01a4:028a        00000000
+                CONST2                DATA           01d8:030c        00000012
+                _DATA                 DATA           0154:043c        00000000
+memmgr.obj      HMA_TEXT              CODE           020b:8a56        0000055b
+                CONST                 DATA           01a4:028a        00000029
+                CONST2                DATA           01d8:031e        00000000
+                _DATA                 DATA           0154:043c        00000000
+task.obj        HMA_TEXT              CODE           020b:8fb1        00000cf8
+                CONST                 DATA           01a4:02b4        0000004a
+                CONST2                DATA           01d8:031e        00000000
+                _DATA                 DATA           0154:043c        00000000
+newstuff.obj    HMA_TEXT              CODE           020b:9ca9        000008d4
+                CONST                 DATA           01a4:02fe        0000000b
+                CONST2                DATA           01d8:031e        0000000c
+                _DATA                 DATA           0154:043c        00000000
+nls.obj         HMA_TEXT              CODE           020b:a57d        000005d2
+                CONST                 DATA           01a4:030a        00000024
+                CONST2                DATA           01d8:032a        00000000
+                _DATA                 DATA           0154:043c        00000010
+network.obj     HMA_TEXT              CODE           020b:ab4f        00000043
+                CONST                 DATA           01a4:032e        00000000
+                CONST2                DATA           01d8:032a        00000000
+                _DATA                 DATA           0154:044c        00000000
+prf.obj         HMA_TEXT              CODE           020b:ab92        00000120
+                CONST                 DATA           01a4:032e        00000011
+                CONST2                DATA           01d8:032a        00000000
+                _DATA                 DATA           0154:044c        00000000
+misc.obj        HMA_TEXT              CODE           020b:acb2        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                _DATA                 DATA           0154:044c        00000000
+strings.obj     HMA_TEXT              CODE           020b:acb2        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                _DATA                 DATA           0154:044c        00000000
+syspack.obj     HMA_TEXT              CODE           020b:acb2        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                _DATA                 DATA           0154:044c        00000000
+lfnapi.obj      HMA_TEXT              CODE           020b:acb2        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                _DATA                 DATA           0154:044c        00000000
+memdisk.obj     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0100        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:0345        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:02b4        00000000
+                _DATA                 DATA           0154:044c        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:acb2        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:02a8        00000062
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:0000        00000000
+                ICONST                FAR_DATA       11a7:000c        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:0002        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+main.obj        INIT_TEXT             CODE           0ce6:030a        0000096a
+                ICONST                FAR_DATA       11a7:000c        0000012b
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:0000        0000027c
+                I_BSS                 FAR_DATA       126d:0002        00000002
+config.obj      INIT_TEXT             CODE           0ce6:0c74        00001fef
+                ICONST                FAR_DATA       11a7:0138        00000535
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:027c        000002ce
+                I_BSS                 FAR_DATA       126d:0004        00000e0e
+initoem.obj     INIT_TEXT             CODE           0ce6:2c63        00000096
+                ICONST                FAR_DATA       11a7:066e        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:054a        00000000
+inithma.obj     INIT_TEXT             CODE           0ce6:2cf9        0000026d
+                ICONST                FAR_DATA       11a7:066e        000000ad
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:054a        00000018
+                I_BSS                 FAR_DATA       126d:0e12        00000004
+dyninit.obj     INIT_TEXT             CODE           0ce6:2f66        0000006f
+                ICONST                FAR_DATA       11a7:071c        0000000f
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:0562        00000000
+iprf.obj        INIT_TEXT             CODE           0ce6:2fd5        0000029c
+                ICONST                FAR_DATA       11a7:072c        0000001b
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:0562        00000002
+initsplsh.obj   INIT_TEXT             CODE           0ce6:3271        000002a2
+                ICONST                FAR_DATA       11a7:0748        0000002a
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:0564        00000000
+                I_BSS                 FAR_DATA       126d:0e16        00000840
+initdisk.obj    INIT_TEXT             CODE           0ce6:3513        00000ffb
+                ICONST                FAR_DATA       11a7:0772        000004ef
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:0564        00000067
+                I_BSS                 FAR_DATA       126d:1656        0000024a
+initclk.obj     INIT_TEXT             CODE           0ce6:450e        000000c1
+                ICONST                FAR_DATA       11a7:0c62        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                I_DATA                FAR_DATA       1148:05cc        00000030
+cpu.obj         PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0100        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:0345        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:02b4        00000000
+                _DATA                 DATA           0154:044c        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:acb2        00000000
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:45cf        0000004c
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:05fc        00000000
+                ICONST                FAR_DATA       11a7:0c62        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:18a0        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+rdpcclk.asm     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0100        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:0345        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:02b4        00000000
+                _DATA                 DATA           0154:044c        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:acb2        00000010
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:461b        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:05fc        00000000
+                ICONST                FAR_DATA       11a7:0c62        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:18a0        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+floppy.asm      PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0100        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:0345        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:02b4        00000000
+                _DATA                 DATA           0154:044c        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:acc2        000000b4
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:461b        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:05fc        00000000
+                ICONST                FAR_DATA       11a7:0c62        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:18a0        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+wrpcclk.asm     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0100        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:0345        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:02b4        00000000
+                _DATA                 DATA           0154:044c        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:ad76        00000009
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:461b        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:05fc        00000000
+                ICONST                FAR_DATA       11a7:0c62        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:18a0        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+wratclk.asm     PSP                   PSP            0000:0100        00000000
+                _IRQTEXT              LCODE          0010:0100        00000000
+                _LOWTEXT              LCODE          0020:011b        00000000
+                _IO_TEXT              LCODE          0031:0345        00000000
+                _IO_FIXED_DATA        LCODE          0065:0144        00000000
+                _TEXT                 LCODE          0079:0003        00000000
+                _FIXED_DATA           FDATA          007a:0b00        00000000
+                _BSS                  BSS            0129:02b4        00000000
+                _DATA                 DATA           0154:044c        00000000
+                _DATAEND              DATA           0198:00cc        00000000
+                CONST                 DATA           01a4:0340        00000000
+                CONST2                DATA           01d8:032a        00000000
+                DCONST                DCONST         020a:000a        00000000
+                DYN_DATA              DYN_DATA       020a:000c        00000000
+                HMA_TEXT_START        CODE           020b:0000        00000000
+                HMA_TEXT              CODE           020b:ad7f        00000022
+                HMA_TEXT_END          CODE           0ce6:0000        00000000
+                INIT_TEXT_START       CODE           0ce6:0000        00000000
+                INIT_TEXT             CODE           0ce6:461b        00000000
+                INIT_TEXT_END         CODE           1148:0000        00000000
+                ID_B                  FAR_DATA       1148:0000        00000000
+                I_DATA                FAR_DATA       1148:05fc        00000000
+                ICONST                FAR_DATA       11a7:0c62        00000000
+                ICONST2               FAR_DATA       126d:0002        00000000
+                ID_E                  FAR_DATA       126d:0002        00000000
+                IB_B                  FAR_DATA       126d:0002        00000000
+                I_BSS                 FAR_DATA       126d:18a0        00000000
+                IB_E                  FAR_DATA       13f7:0410        00000000
+
+
+                        +--------------------+
+                        |   Libraries Used   |
+                        +--------------------+
+
+../lib/device.lib
+
+
+                        +-----------------------+
+                        |   Linker Statistics   |
+                        +-----------------------+
+
+Stack size:  1000 (4096.)
+Memory size:  00015380 (86912.)
+Entry point address: 0000:0000
+Link time: 00:00.58

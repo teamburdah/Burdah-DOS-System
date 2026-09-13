@@ -1,0 +1,4 @@
+Extra space     : 2:   312 0x0138
+Heaplen position: 4: 59386 0x0000e7fa
+Bufsize         : 2:   256 0x0100
+End             : 0

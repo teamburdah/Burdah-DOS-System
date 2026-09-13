@@ -1,0 +1,57 @@
+; DEFAULT.err
+;
+; Critical error (criter) handler national customization file
+; Burdah DOS System / Portal shell -- Language: English
+;
+; Consumed by utilsc/critstrs.exe (see critstrs.c for exact syntax).
+; Format per line: NAME:text   or   NR:text
+;
+; The human-readable message is built from one of two templates:
+;   BLOCK_DEVICE (errors on block devices, e.g. disks)
+;   CHAR_DEVICE  (errors on character devices, e.g. printers, serial ports)
+; Placeholders:
+;   %1 -> READ or WRITE, depending on the operation that failed
+;   %2 -> area affected: DOS, FAT, ROOT or DATA
+;   %3 -> the actual error text (one of the numbered strings below)
+;   %A -> drive letter (block device) or device name (character device)
+;   %% -> a literal percent sign
+
+BLOCK_DEVICE:%1 error, drive %A:, %2 area: %3
+CHAR_DEVICE:%1 error, device %A: %3
+
+READ:reading
+WRITE:writing
+
+DOS:DOS
+FAT:FAT
+ROOT:root directory
+DATA:data
+
+IGNORE:Ignore
+RETRY:Retry
+ABORT:Abort
+FAIL:Fail
+QUESTION:?
+DELIMITER:, 
+
+KEYS_IGNORE:I
+KEYS_RETRY:R
+KEYS_ABORT:A
+KEYS_FAIL:F
+UNKNOWN:unknown error
+
+; Numbered strings correspond to the low byte of DI passed to the
+; critical-error handler (standard DOS INT 24h device error codes).
+0:attempted to write on a write-protected disk
+1:unknown unit
+2:drive not ready
+3:unknown command given to device
+4:data error (bad CRC)
+5:bad request structure length
+6:seek error
+7:unknown media type
+8:sector not found
+9:printer out of paper
+10:write fault
+11:read fault
+12:general failure

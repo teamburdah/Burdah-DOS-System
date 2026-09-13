@@ -1,0 +1,6 @@
+alias.obj beep.obj break.obj call.obj cdd.obj chcp.obj chdir.obj
+cls.obj color.obj copy.obj ctty.obj date.obj del.obj dir.obj dirs.obj
+doskey.obj echo.obj exit.obj exit2.obj fddebug.obj for.obj goto.obj help.obj
+history.obj if.obj lfnfor.obj memory.obj mkdir.obj path.obj pause.obj
+popd.obj prompt.obj pushd.obj rem.obj ren.obj rmdir.obj set.obj
+shift.obj time.obj truename.obj type.obj verify.obj which.obj
