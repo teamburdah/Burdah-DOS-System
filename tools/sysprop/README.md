@@ -1,23 +1,17 @@
-# dos-aboutpc
+# dos-sysprop
 
-Merupakan "System Properties" yang dikembangkan sepaket dengan Burdah-
-DOS-System. Aplikasi ini terinspirasi dari 'fastfetch' mdoern, namun
-dibuat lebih sederhana tanpa ASCII art seperti logo Burdah. Mungkin
-kedepannya pengembang akan menambahkan logo Burdah, sepertinya estetika
-ini kita bicarakan nanti saja. Seharusnya ini juga bisa digunakan untuk
-FreeDOS, MS DOS, dan DOS lain.
-
-Aplikasi ini diprogram dengan Claude Chat (saya tak punya langganan
-Claude Code)
+Utilitas "System Properties" sederhana untuk FreeDOS/MS-DOS 16-bit,
+terinspirasi tampilan ala `fastfetch` tapi minimalis (tanpa ASCII art
+logo). Menampilkan info dasar CPU, RAM, board, disk, dan video dalam
+format teks berwarna, langsung di command line DOS.
 
 ## Target Kompatibilitas
 
-- **OS**: Burdah DOS 0.5 (prioritas utama), kompatibel juga dengan Free
-  DOS (kernelnya aja dari FreeDOS 1.4) juga MS DOS versi lama, juga
-  varian DOS lain yang mengikuti standar INT 21h/INT 13h.
+- **OS**: FreeDOS 1.4 (prioritas utama), kompatibel juga dengan MS-DOS
+  versi lama dan varian DOS lain yang mengikuti standar INT 21h/INT 13h.
 - **CPU minimum**: Intel 8086/8088 (real mode murni, tanpa instruksi
-  386+). Ini sejalan dengan basis kernel FreeDOS 1.4 yang masih merilis
-  edisi floppy untuk mesin IBM PC/XT/AT asli.
+  386+). Ini sejalan dengan FreeDOS 1.4 yang masih merilis edisi floppy
+  untuk mesin IBM PC/XT/AT asli.
 - **CPU maksimum**: mendukung deteksi hingga CPU dengan CPUID (Pentium
   generation ke atas) untuk nama prosesor detail.
 - **Memori**: berjalan di 640 KB conventional memory (tanpa perlu extended
@@ -72,7 +66,7 @@ cd src
 wmake -f ../makefile.wat
 ```
 
-Menghasilkan `aboutpc.exe` — file tunggal, tanpa DLL/overlay (lihat
+Menghasilkan `sysprop.exe` — file tunggal, tanpa DLL/overlay (lihat
 alasan teknis di `docs/DECISIONS.md`).
 
 ## Struktur Proyek
@@ -82,7 +76,3 @@ Lihat `PROJECT_TREE.md`.
 ## Progres & Roadmap
 
 Lihat `PROGRESS.md`.
-
-## Terimakasih
-kepada Claude dan segala AI penerus yang mau melakukan Vibe Coding,
-saya tak menyangka apakah ini adalah slop atau gem :D

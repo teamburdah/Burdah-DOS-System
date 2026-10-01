@@ -25,13 +25,13 @@
  * membaca posisi saat ini via AH=03h. Ini lebih portabel ketimbang
  * menulis langsung ke memori video B800:0000, karena BIOS yang
  * menentukan alamat basis video (beda antara MDA/CGA/EGA/VGA). */
-static void put_char_color(char ch, unsigned char attr)
+static void put_char_color(char c, unsigned char attr)
 {
     unsigned char row = 0, col = 0;
 
     _asm {
         mov ah, 09h
-        mov al, ch
+        mov al, c
         mov bl, attr
         mov bh, 0        ; video page 0
         mov cx, 1        ; tulis 1 karakter
@@ -75,12 +75,20 @@ static void put_string_color(const char *s, unsigned char attr)
 static void put_string_plain(const char *s)
 {
     /* Untuk teks non-warna (spasi, separator ": ", newline), pakai
-     * teletype biasa (AH=0Eh) yang otomatis menangani \r\n & scroll,
-     * lebih sederhana daripada put_char_color untuk kasus ini. */
+     * teletype biasa (AH=0Eh) yang otomatis menangani \r\n & scroll.
+     *
+     * PENTING: `s` adalah pointer near (16-bit). Menulis `[s]` di
+     * dalam _asm langsung akan mengambil byte dari ALAMAT VARIABEL s
+     * itu sendiri (bukan dereference isi yang ditunjuknya) -- bug
+     * nyata yang ditemukan lewat pengujian di DOSBox (menghasilkan
+     * output acak/berantakan). Cara benar: muat NILAI pointer ke
+     * register dulu (mov bx, s), baru dereference lewat register itu
+     * ([bx]). */
     while (*s) {
+        unsigned char c = (unsigned char)*s;
         _asm {
             mov ah, 0Eh
-            mov al, byte ptr [s]
+            mov al, c
             mov bh, 0
             int 10h
         }

@@ -5,9 +5,9 @@
  *
  * Layout target:
  *
- *   About this PC
+ *   System Properties
  *   -------------------------------
- *   SYSTEM   : FreeDOS 1.4  <--- atau "Burdah-DOS-System 0.x"
+ *   SYSTEM   : FreeDOS 1.4
  *   CPU      : Intel Pentium 100 MHz
  *   MACHINE  : ASUS P/I-P55T2P4
  *   RAM      : 640 KB (Conventional) + 15 MB (Extended)
@@ -103,8 +103,8 @@ int main(void)
     merge_monitor_line(&info.video, &monitor_line);
 
     /* --- Render --- */
-    printf("About this PC\r\n");
-    printf("########################################\r\n");
+    printf("System Properties\r\n");
+    printf("-------------------------------\r\n");
 
     render_field("SYSTEM ", &info.os_name,      0);
     render_field("CPU    ", &cpu_line,           0);

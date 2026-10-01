@@ -1,18 +1,21 @@
 /* ===================================================================
  * detect_disk.c
  * Deteksi ukuran HDD pertama via BIOS INT 13h, daftar partisi primer
- * via parsing MBR, dan (FASE 2) nama model drive fisik via command
- * ATA IDENTIFY DEVICE yang dikirim LANGSUNG ke port I/O controller
- * IDE -- di luar cakupan BIOS interrupt biasa.
+ * via parsing MBR, dan nama model drive fisik via command ATA
+ * IDENTIFY DEVICE yang dikirim LANGSUNG ke port I/O controller IDE --
+ * di luar cakupan BIOS interrupt biasa.
  *
- * CATATAN PENTING soal asumsi mapping drive:
- * BIOS drive 0x80 (HDD pertama menurut INT 13h) KONVENSIONALNYA
- * adalah primary master pada controller IDE standar (port base
- * 0x1F0-0x1F7). Ini asumsi umum yang berlaku di kebanyakan konfigurasi
- * standar (termasuk default 86Box), TAPI tidak selalu benar 100% kalau
- * boot order di-custom di BIOS/CMOS. Kalau primary master tidak
- * merespons, kode ini TIDAK otomatis mencoba slave/secondary --
- * ditandai TODO fase 3 kalau perlu pencarian lebih lengkap.
+ * FASE 3: pencarian drive dicoba di 4 kombinasi posisi (primary/
+ * secondary controller x master/slave), bukan cuma primary master
+ * seperti fase 2 -- lihat DECISIONS.md poin 7 untuk detail trade-off
+ * waktu tunggu vs cakupan deteksi.
+ *
+ * CATATAN: ukuran & geometri (via INT 13h) tetap hanya membaca drive
+ * BIOS 0x80 (HDD pertama menurut BIOS) -- pencarian multi-posisi di
+ * atas HANYA berlaku untuk pencarian NAMA MODEL via ATA IDENTIFY,
+ * karena BIOS drive number dan posisi fisik controller/master-slave
+ * adalah dua sistem penomoran yang berbeda dan tidak selalu berkaitan
+ * satu-satu.
  * =================================================================== */
 
 #include "detect_disk.h"
@@ -35,7 +38,8 @@ typedef struct {
  * Bagian ATA IDENTIFY DEVICE (akses port I/O langsung)
  * =================================================================== */
 
-#define ATA_PRIMARY_BASE   0x1F0
+#define ATA_PRIMARY_BASE    0x1F0
+#define ATA_SECONDARY_BASE  0x170
 
 #define ATA_REG_DATA       0
 #define ATA_REG_SECCOUNT   2
@@ -112,6 +116,24 @@ static int ata_wait_drq(unsigned base)
     }
     return 0;
 }
+
+/* FASE 3: coba 4 kombinasi posisi drive ATA yang umum (bukan cuma
+ * primary master seperti fase 2), karena mapping "BIOS drive 0x80"
+ * ke posisi fisik controller/master-slave tidak selalu primary
+ * master -- tergantung konfigurasi BIOS/CMOS & urutan boot. */
+typedef struct {
+    unsigned base;
+    int      slave;
+    const char *label; /* utk debugging/komentar, tak ditampilkan ke user */
+} ata_position_t;
+
+static const ata_position_t ata_positions[] = {
+    { ATA_PRIMARY_BASE,   0, "primary master"   },
+    { ATA_PRIMARY_BASE,   1, "primary slave"    },
+    { ATA_SECONDARY_BASE, 0, "secondary master" },
+    { ATA_SECONDARY_BASE, 1, "secondary slave"  },
+};
+#define ATA_POSITION_COUNT (sizeof(ata_positions) / sizeof(ata_positions[0]))
 
 /* Kirim command IDENTIFY DEVICE (0xECh) ke drive master/slave pada
  * base port yg diberikan.
@@ -201,12 +223,30 @@ void detect_disk(disk_info_t *out)
 
     memset(out, 0, sizeof(*out));
 
-    /* --- Nama drive fisik via ATA IDENTIFY DEVICE (FASE 2) --- */
+    /* --- Nama drive fisik via ATA IDENTIFY DEVICE ---
+     * FASE 3: coba berurutan primary master -> primary slave ->
+     * secondary master -> secondary slave, berhenti di percobaan
+     * pertama yang berhasil. Konsekuensinya: kalau memang tak ada
+     * drive ATA sama sekali, startup app tertunda oleh total waktu
+     * timeout dari SEMUA 4 percobaan -- trade-off yang diterima demi
+     * cakupan deteksi yang lebih lengkap (lihat DECISIONS.md). */
     {
         static unsigned identify_buf[256]; /* static: hindari 512 byte di stack */
-        int r = ata_identify(ATA_PRIMARY_BASE, 0 /* master */, identify_buf);
+        unsigned i;
+        int found = 0;
+        int atapi_seen = 0;
 
-        if (r == 1) {
+        for (i = 0; i < ATA_POSITION_COUNT && !found; i++) {
+            int r = ata_identify(ata_positions[i].base, ata_positions[i].slave,
+                                  identify_buf);
+            if (r == 1) {
+                found = 1;
+            } else if (r == -1) {
+                atapi_seen = 1;
+            }
+        }
+
+        if (found) {
             char model[41];
             ata_extract_string(identify_buf, 27, 20, model, sizeof(model));
             if (model[0] != '\0') {
@@ -214,14 +254,14 @@ void detect_disk(disk_info_t *out)
                 out->drive_name.text[sizeof(out->drive_name.text) - 1] = '\0';
                 out->drive_name.status = STATUS_OK;
             } else {
-                strcpy(out->drive_name.text, "N/A (string model empty)");
+                strcpy(out->drive_name.text, "N/A (model string kosong)");
                 out->drive_name.status = STATUS_FAIL;
             }
-        } else if (r == -1) {
-            strcpy(out->drive_name.text, "N/A (maybe ATAPI, not HDD)");
+        } else if (atapi_seen) {
+            strcpy(out->drive_name.text, "N/A (hanya ATAPI terdeteksi)");
             out->drive_name.status = STATUS_NA;
         } else {
-            strcpy(out->drive_name.text, "N/A (timeout/not respond)");
+            strcpy(out->drive_name.text, "N/A (tak ada drive ATA merespons)");
             out->drive_name.status = STATUS_FAIL;
         }
     }

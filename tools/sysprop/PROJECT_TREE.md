@@ -1,8 +1,8 @@
 # Struktur Proyek
 
 ```
-dos-aboutpc/
-├── README.md             	Overview proyek, target kompatibilitas, cara build
+dos-sysprop/
+├── README.md              Overview proyek, target kompatibilitas, cara build
 ├── PROGRESS.md             Status implementasi per modul + roadmap fase 3
 ├── PROJECT_TREE.md         File ini
 ├── makefile.wat            Build script untuk Open Watcom (wmake)
@@ -16,10 +16,22 @@ dos-aboutpc/
 │   │                        (INT 21h AX=33FFh) + fallback standar
 │   │                        (INT 21h AH=30h)
 │   │
-│   ├── detect_cpu.h/.c      Compatibility gate: FLAGS-probing 8086→Pentium+,
-│   │                        CPUID vendor/brand string, clock speed
-│   │                        (RDTSC utk CPU+TSC, fallback loop-timing vs PIT
-│   │                        utk CPU pra-CPUID)
+│   ├── detect_cpu.h/.c      Compatibility gate: tahap 1 (8086 vs 286+,
+│   │                        kuirk FLAGS bit 12-15, instruksi 16-bit
+│   │                        murni) + tahap 2 (286 vs 386+, VIA COBA
+│   │                        EKSEKUSI pushfd dilindungi setjmp/longjmp +
+│   │                        handler INT 6 -- BUKAN lagi kuirk FLAGS,
+│   │                        lihat DECISIONS.md poin 10 kenapa diganti),
+│   │                        fallback clock speed loop-timing vs PIT
+│   │
+│   ├── detect_cpu_x86.h/.c  Compatibility gate tahap 3&4 (386 vs 486 vs
+│   │                        Pentium+/CPUID) + CPUID vendor/brand string
+│   │                        + tabel Family/Model (nama CPU lebih
+│   │                        spesifik saat tanpa brand string) + RDTSC
+│   │                        + probe_pushfd_raw (dipakai detect_cpu.c
+│   │                        lewat setjmp/longjmp). WAJIB dikompilasi
+│   │                        target CPU tinggi (-5) -- lihat
+│   │                        DECISIONS.md poin 9(a) & 10
 │   │
 │   ├── detect_mem.h/.c      RAM conventional (INT 12h) & extended
 │   │                        (INT 15h E801h/88h)
@@ -44,9 +56,36 @@ dos-aboutpc/
 │                            → gabung field terkait (merge_*_line) →
 │                            render ke layar sesuai layout System Properties
 │
-└── build/                   (kosong — hasil kompilasi .obj/.exe taruh sini,
-                              tidak di-commit ke git)
+└── build/                   sysprop.exe hasil kompilasi TERVERIFIKASI
+                             (Open Watcom + DOSBox) ada di sini, siap
+                             dicoba di 86Box
 ```
+
+## Status Build (Fase 3.5)
+
+Source ini SUDAH berhasil dikompilasi & dijalankan nyata (Open Watcom
+2.0 beta + DOSBox 0.74-3), bukan cuma ditulis berdasar dokumentasi.
+`build/sysprop.exe` adalah hasil build dari source ASLI di folder ini
+(termasuk `AX=33FFh` yang aktif, belum divalidasi di FreeDOS
+sungguhan -- lihat PROGRESS.md fase 4). Compile ulang manual:
+
+```
+export WATCOM=/path/ke/ow-snapshot
+export PATH="$WATCOM/binl64:$PATH"   # atau binl utk 32-bit Linux
+export INCLUDE="$WATCOM/h"
+cd src
+wcc -0 -ms -zq -oh -d0 detect_cpu.c     -fo=../build/detect_cpu.obj
+wcc -5 -ms -zq -oh -d0 detect_cpu_x86.c -fo=../build/detect_cpu_x86.obj
+wcc -0 -ms -zq -oh -d0 main.c detect_os.c detect_mem.c detect_disk.c detect_board.c detect_video.c render.c -fo=../build/
+cd ../build
+wlink system dos name sysprop file { main.obj detect_os.obj detect_cpu.obj detect_cpu_x86.obj detect_mem.obj detect_disk.obj detect_board.obj detect_video.obj render.obj }
+```
+
+**Catatan penting**: `detect_cpu_x86.c` WAJIB target `-5`, file lain
+WAJIB target `-0` -- lihat DECISIONS.md poin 9(a). `makefile.wat` yang
+disediakan SUDAH disesuaikan dan **TERVERIFIKASI jalan dengan `wmake`**
+(diuji nyata: `wmake -f ../makefile.wat` dari folder `src/` berhasil
+menghasilkan `sysprop.exe` yang identik dengan build manual).
 
 ## Alur Dependensi Modul
 
@@ -90,5 +129,5 @@ interrupt.
 
 ## Output Build
 
-Satu file `aboutpc.exe` (format MZ, real-mode, tanpa dependency DLL/
+Satu file `sysprop.exe` (format MZ, real-mode, tanpa dependency DLL/
 overlay — lihat `docs/DECISIONS.md` untuk alasan teknisnya).

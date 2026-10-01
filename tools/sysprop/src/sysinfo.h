@@ -5,7 +5,7 @@
  * sysinfo.h
  * Struktur data bersama untuk seluruh modul deteksi hardware.
  *
- * Project : dos-aboutpc
+ * Project : dos-sysprop
  * Target  : FreeDOS 1.4 / MS-DOS, kompatibel dari Intel 8086 ke atas
  * =================================================================== */
 

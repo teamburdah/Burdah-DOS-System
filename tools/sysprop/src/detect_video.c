@@ -1,12 +1,14 @@
 /* ===================================================================
  * detect_video.c
- * Deteksi jenis adapter video via BIOS INT 10h, dan (FASE 2) resolusi
- * monitor asli via VESA VBE (Video BIOS Extension) DDC + parsing EDID.
+ * Deteksi jenis adapter video via BIOS INT 10h, resolusi monitor asli
+ * via VESA VBE (Video BIOS Extension) DDC + parsing EDID, dan (FASE 3)
+ * fallback baca resolusi mode VESA aktif kalau DDC tak didukung.
  *
  * EDID adalah data 128 byte yang dikirim monitor ke graphics card
  * lewat jalur DDC (Display Data Channel, protokol I2C di kabel VGA/
  * DVI/HDMI pin tertentu). Card & BIOS-nya HARUS mendukung VBE fungsi
- * 4Fh/15h untuk membaca ini -- kalau tidak, resolusi ditandai
+ * 4Fh/15h untuk membaca ini -- kalau tidak, dicoba fallback baca mode
+ * aktif (AX=4F01h/4F03h); kalau itu juga gagal, resolusi ditandai
  * UNSUPPORTED (bukan error, memang fiturnya tak ada).
  * =================================================================== */
 
@@ -84,6 +86,69 @@ static void edid_get_resolution(const unsigned char edid[128],
     *v_active = ((unsigned)(dtd[7] & 0xF0) << 4) | dtd[5];
 }
 
+/* FASE 3: fallback kalau monitor/card tak dukung DDC/EDID -- baca
+ * resolusi MODE VIDEO YANG SEDANG AKTIF via VESA VBE (AX=4F03h utk
+ * nomor mode aktif, AX=4F01h utk detail mode termasuk XResolution/
+ * YResolution). Ini BUKAN resolusi native monitor sesungguhnya (cuma
+ * mode yang kebetulan sedang dipakai saat ini), tapi tetap informasi
+ * yang berguna dan lebih baik daripada kosong sama sekali. */
+#pragma pack(push, 1)
+typedef struct {
+    unsigned short mode_attributes;
+    unsigned char  win_a_attributes;
+    unsigned char  win_b_attributes;
+    unsigned short win_granularity;
+    unsigned short win_size;
+    unsigned short win_a_segment;
+    unsigned short win_b_segment;
+    unsigned long  win_func_ptr;
+    unsigned short bytes_per_scanline;
+    unsigned short x_resolution;
+    unsigned short y_resolution;
+    /* field selanjutnya (BitsPerPixel dst) tak dipakai di sini,
+     * struct sengaja dipotong -- buffer aslinya tetap 256 byte penuh
+     * dikirim ke BIOS supaya tak menulis di luar batas. */
+} vbe_mode_info_partial_t;
+#pragma pack(pop)
+
+static int vbe_get_current_mode_resolution(unsigned *x, unsigned *y)
+{
+    static unsigned char mode_info_buf[256];
+    unsigned ax_result = 0;
+    unsigned current_mode = 0;
+    void far *buf_ptr = (void far *)mode_info_buf;
+
+    /* AX=4F03h: minta nomor mode VESA yang sedang aktif */
+    _asm {
+        mov ax, 4F03h
+        int 10h
+        mov ax_result, ax
+        mov current_mode, bx
+    }
+    if ((ax_result & 0x00FF) != 0x004F || (ax_result & 0xFF00) != 0x0000) return 0;
+
+    memset(mode_info_buf, 0, sizeof(mode_info_buf));
+    {
+        unsigned mode_num = current_mode;
+        _asm {
+            mov ax, 4F01h
+            mov cx, mode_num
+            les di, buf_ptr
+            int 10h
+            mov ax_result, ax
+        }
+    }
+    if ((ax_result & 0x00FF) != 0x004F || (ax_result & 0xFF00) != 0x0000) return 0;
+
+    {
+        vbe_mode_info_partial_t *info = (vbe_mode_info_partial_t *)mode_info_buf;
+        if (info->x_resolution == 0 || info->y_resolution == 0) return 0;
+        *x = info->x_resolution;
+        *y = info->y_resolution;
+        return 1;
+    }
+}
+
 void detect_video(video_info_t *out)
 {
     unsigned char mode = 0;
@@ -109,7 +174,7 @@ void detect_video(video_info_t *out)
     }
 
     if (al_result == 0x1A) {
-        strcpy(out->adapter.text, "VGA or newest");
+        strcpy(out->adapter.text, "VGA atau lebih baru");
         out->adapter.status = STATUS_OK;
 
         if (vbe_ddc_supported()) {
@@ -123,23 +188,32 @@ void detect_video(video_info_t *out)
                     sprintf(out->resolution.text, "%u x %u", h_active, v_active);
                     out->resolution.status = STATUS_OK;
                 } else {
-                    strcpy(out->resolution.text, "N/A (timing descriptor null)");
+                    strcpy(out->resolution.text, "N/A (deskriptor timing kosong)");
                     out->resolution.status = STATUS_FAIL;
                 }
             } else {
-                strcpy(out->resolution.text, "N/A (EDID error/crash)");
+                strcpy(out->resolution.text, "N/A (EDID gagal/rusak)");
                 out->resolution.status = STATUS_FAIL;
             }
         } else {
-            out->resolution.text[0] = '\0';
-            out->resolution.status = STATUS_UNSUPPORTED; /* monitor/card tak dukung DDC */
+            /* FASE 3: DDC tak didukung -- coba fallback resolusi mode
+             * VESA yang sedang aktif (bukan resolusi native monitor,
+             * tapi lebih informatif daripada kosong). */
+            unsigned x = 0, y = 0;
+            if (vbe_get_current_mode_resolution(&x, &y)) {
+                sprintf(out->resolution.text, "%u x %u (mode aktif)", x, y);
+                out->resolution.status = STATUS_OK;
+            } else {
+                out->resolution.text[0] = '\0';
+                out->resolution.status = STATUS_UNSUPPORTED; /* monitor/card tak dukung DDC maupun VBE mode-info */
+            }
         }
     } else {
         /* Fallback klasifikasi kasar berdasar nomor mode video aktif. */
         const char *name;
         switch (mode) {
             case 0x07:
-                name = "MDA (monochrome)";
+                name = "MDA (monokrom)";
                 break;
             case 0x04:
             case 0x05:
@@ -153,7 +227,7 @@ void detect_video(video_info_t *out)
                 name = "EGA";
                 break;
             default:
-                name = "Unknown video adapter";
+                name = "Adapter video tidak dikenali";
                 break;
         }
         strcpy(out->adapter.text, name);

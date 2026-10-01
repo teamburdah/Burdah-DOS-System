@@ -9,9 +9,6 @@
  * ke string ASCIZ berisi versi kernel ASLI (mis. "2045"), BUKAN versi
  * DOS yang di-emulasikan untuk kompatibilitas software (yang bisa
  * dipengaruhi SETVER dan biasanya dilaporkan sbg 7.10 dsb).
- * 
- * CATATAN: OEM ID Burdah adalah 0xBB, jadi Burdah-DOS-System juga
- * didukung (proyek ini untuk Burdah-DOS-System)
  *
  * Cara deteksi dukungan: panggil dengan DX=0 dulu. Kalau kernel TIDAK
  * mengenal fungsi ini (bukan FreeDOS), register DX akan TETAP 0
@@ -26,12 +23,15 @@
 
 #include "detect_os.h"
 #include <dos.h>
+#include <i86.h>
 #include <string.h>
 #include <stdio.h>
 
 void detect_os(field_t *out)
 {
-    unsigned seg = 0, off = 0;
+    unsigned r_seg = 0, r_off = 0; /* prefix r_ -- "seg"/"off" polos bentrok
+                                     * dengan operator SEG/OFFSET bawaan
+                                     * inline assembler Open Watcom */
 
     memset(out, 0, sizeof(*out));
 
@@ -40,12 +40,12 @@ void detect_os(field_t *out)
         mov ax, 33FFh
         mov dx, 0
         int 21h
-        mov off, ax
-        mov seg, dx
+        mov r_off, ax
+        mov r_seg, dx
     }
 
-    if (seg != 0) {
-        char far *ver_str = (char far *)MK_FP(seg, off);
+    if (r_seg != 0) {
+        char far *ver_str = (char far *)MK_FP(r_seg, r_off);
         char buf[40];
         unsigned i;
 
@@ -81,7 +81,7 @@ void detect_os(field_t *out)
         if (major == 0 && minor == 0) {
             /* DOS versi sangat lama (<2.0) tidak mengimplementasikan
              * fungsi ini sama sekali dan akan selalu return 0. */
-            strcpy(out->text, "N/A (DOS < 2.0 or unknown)");
+            strcpy(out->text, "N/A (DOS < 2.0 atau tak dikenali)");
             out->status = STATUS_UNSUPPORTED;
             return;
         }
@@ -91,7 +91,6 @@ void detect_os(field_t *out)
             switch (oem) {
                 case 0x00: oem_name = "PC-DOS"; break;
                 case 0xFF: oem_name = "MS-DOS"; break;
-				case 0xBB: oem_name = "Burdah-DOS-System"; break;
                 default:   oem_name = "DOS (OEM tak dikenali)"; break;
             }
             sprintf(out->text, "%s %u.%02u", oem_name, major, minor);
