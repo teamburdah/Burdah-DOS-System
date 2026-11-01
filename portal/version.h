@@ -1,1 +1,0 @@
-#define FREECOM_VERSION "1.05"
